@@ -5,6 +5,7 @@ from trivia import views
 urlpatterns = [
     path('trivia/', views.QuestionList.as_view()),
     path('trivia/<int:pk>/', views.QuestionDetail.as_view()),
+    path('trivia/random', views.RandomQuestion.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
