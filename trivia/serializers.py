@@ -1,9 +1,15 @@
 from rest_framework import serializers
-from trivia.models import TrueOrFalse
+from trivia.models import Answer, Question
 
-class QuestionSerializer(serializers.ModelSerializer):
+class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TrueOrFalse 
-        fields = ['id', 'question', 'answer']
+        model = Answer
+        fields = ['id', 'answer', 'is_correct']
+
+class RandomQuestionSerializer(serializers.ModelSerializer):
+    answer = AnswerSerializer(many=True, read_only=True)
+    class Meta:
+        model = Question
+        fields = ['title', 'answer']
 
 

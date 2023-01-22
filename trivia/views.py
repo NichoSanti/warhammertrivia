@@ -1,20 +1,13 @@
-from trivia.models import TrueOrFalse
-from trivia.serializers import QuestionSerializer
-from rest_framework import generics
-import random
+from trivia.models import Question
+from trivia.serializers import RandomQuestionSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-class QuestionList(generics.ListCreateAPIView):
-    queryset = TrueOrFalse.objects.all()
-    serializer_class = QuestionSerializer
-
-
-class QuestionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = TrueOrFalse.objects.all()
-    serializer_class = QuestionSerializer
-
-class RandomQuestion(generics.ListAPIView):
-    queryset = TrueOrFalse.objects.order_by('?')[:1]
-    serializer_class = QuestionSerializer
+class RandomQuestion(APIView):
+    def  get(self, request, format=None , **kwargs):
+        question = Question.objects.filter().order_by('?')[:1]
+        serializer = RandomQuestionSerializer(question,many=True)
+        return Response(serializer.data)
 
     
